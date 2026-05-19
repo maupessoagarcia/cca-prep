@@ -161,3 +161,22 @@ Key design pattern: The history list grows with every exchange. By sending the e
 One small bug: the print statement uses {{assistant_text}} with double braces, which would literally print {assistant_text} instead of the variable's value. It should be {assistant_text} (single braces)
 
 -> When does response.content have more than one block? When using a tool.
+
+Streaming ->
+
+Here's what each part of the code does:
+Setup — imports time for benchmarking, Anthropic for the API client, and dotenv to load your API key from a .env file. Both patterns send the same prompt.
+Pattern 1 — non-streaming (client.messages.create): Makes a single blocking call. The program freezes until the model finishes generating the entire response, then hands back a complete response object. You extract the text with response.content[0].text. The elapsed time covers the full round trip — waiting + generation. Nothing is shown to the user until it's all done.
+Pattern 2 — streaming (client.messages.stream): Opens a context manager that maintains a live connection to the API. As the model generates tokens, they're pushed back immediately. stream.text_stream is an iterator that yields small string chunks. print(text, end="", flush=True) prints each chunk without a newline and flushes the buffer instantly, so the user sees words appearing in real time. The code also records first_byte_time — the moment the very first chunk arrives — which is typically much shorter than the total time and is the key UX metric for perceived responsiveness.
+The total wall-clock time is similar for both patterns; streaming doesn't make the model faster. The difference is entirely about when the user sees text: all at once at the end, versus word-by-word from the start.
+
+When would I not use streaming?
+
+Streaming is the default for interactive UX, but there are real cases where you'd skip it:
+When you need the complete response before doing anything with it — if you're parsing the output as JSON, passing it to another function, or storing it in a database, you gain nothing from streaming. You'd just be buffering chunks back into a string anyway.
+Tool use / function calling — tool call arguments arrive as a structured block that only makes sense when complete. The SDK gives you stream.get_final_message() to handle this, but at that point you're essentially doing non-streaming anyway. Simpler to just use messages.create.
+Batch processing — if you're running hundreds of requests offline (summarizing documents, classifying records, etc.), throughput matters more than latency. Anthropic also has a dedicated Batch API for this that's cheaper and purpose-built.
+Short responses — if the answer is one sentence, the streaming overhead isn't worth it. The "first byte" advantage disappears when the whole response arrives in under a second.
+Server-side pipelines where a human isn't watching — streaming is a UX optimization. If the output goes to a log, a queue, or another API call, there's no user to feel the benefit.
+Error handling simplicity — non-streaming gives you one response object with a clear success/failure. With streaming you have to handle errors that can appear mid-stream, which adds complexity.
+The rough rule: streaming = a human is reading the output in real time. Non-streaming = code is consuming the output.
