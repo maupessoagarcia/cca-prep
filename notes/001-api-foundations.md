@@ -180,3 +180,23 @@ Short responses — if the answer is one sentence, the streaming overhead isn't 
 Server-side pipelines where a human isn't watching — streaming is a UX optimization. If the output goes to a log, a queue, or another API call, there's no user to feel the benefit.
 Error handling simplicity — non-streaming gives you one response object with a clear success/failure. With streaming you have to handle errors that can appear mid-stream, which adds complexity.
 The rough rule: streaming = a human is reading the output in real time. Non-streaming = code is consuming the output.
+
+Task → Temperature recommendation. Cover: classification, JSON extraction, creative
+writing, chat, code generation
+
+The core logic: low temperature = the model picks the highest-probability token each step (deterministic, precise). High temperature = probability mass spreads out (diverse, surprising, occasionally wrong). For anything where there's a "correct" answer, stay low. For anything where novelty is the goal, go high.
+
+The core logic: stop sequences let you treat generation as a cursor — you run the model, capture up to the delimiter, then decide what to do next. This is especially powerful in agentic and multi-turn loops where you want fine-grained control over when the model "hands back" to your code. The API returns stop_reason: "stop_sequence" so you always know why generation ended.
+
+"Why do output tokens cost 5x input tokens?"
+7:19 AM
+
+Great question! There are a few reasons:
+
+Generation is computationally heavier than reading. When processing input, the model runs a single forward pass over all tokens in parallel. When generating output, it produces one token at a time, each requiring its own forward pass — so 500 output tokens means 500 sequential passes.
+
+KV cache reuse. Input tokens can take advantage of caching (reusing intermediate computations), which makes re-reading the same context cheaper. Output tokens can't benefit from this the same way since each one is new.
+
+Demand and value. Output tokens are the "product" — the thing you actually wanted. Pricing also reflects market positioning, not just raw compute cost.
+
+The rough 5x ratio (e.g. $3/$15 per million for Sonnet) is fairly standard across frontier model providers, so it's become something of an industry norm too.
