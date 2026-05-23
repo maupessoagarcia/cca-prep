@@ -200,3 +200,23 @@ KV cache reuse. Input tokens can take advantage of caching (reusing intermediate
 Demand and value. Output tokens are the "product" — the thing you actually wanted. Pricing also reflects market positioning, not just raw compute cost.
 
 The rough 5x ratio (e.g. $3/$15 per million for Sonnet) is fairly standard across frontier model providers, so it's become something of an industry norm too.
+
+"What goes in messages vs system vs tools ?
+
+These are the three separate "channels" you pass to the API, each serving a distinct purpose:
+
+**`system`** — The persistent instruction layer. Sets Claude's persona, constraints, output format, and rules. It's a single string, not part of the conversation turns. Claude reads it on every request but it's never attributed to "user" or "assistant."
+
+**`messages`** — The conversation history. An ordered list of `{"role": ..., "content": ...}` dicts, alternating between `"user"` and `"assistant"`. This is where the actual dialogue lives. Must start with a user turn.
+
+**`tools`** — Function definitions you expose to Claude. Each tool has a name, description, and JSON schema for its parameters. Claude doesn't call them directly — it emits a `tool_use` content block when it wants one called, and you run the function and return the result as a `tool_result` message.
+
+A rough mental model:
+
+```
+system   → "Here's who you are and how to behave"
+messages → "Here's what we've said so far"
+tools    → "Here's what actions you're allowed to take"
+```
+
+They can all be used together — a common pattern is a system prompt defining behavior, a growing message history, and a set of tools Claude can invoke when it needs to fetch data or take action.
