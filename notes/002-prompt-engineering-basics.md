@@ -13,3 +13,10 @@
 
 5. Chain of thought. Ask Claude to think before answering — "think step by step in <thinking> tags, then give your final answer in
    <answer> tags." For hard reasoning tasks this dramatically improves correctness, at the cost of more output tokens.
+
+---
+
+Day 9 - Eval
+
+Zero Shot accuracy - 72% (36/50)
+Few shots accuracy - 76% (38/50)

@@ -1,0 +1,50 @@
+{"email": "I'm going to die if this is not solved in 10 seconds", "label":"CRITICAL"}
+{"email": "Hi, I need help here, but for next week", "label":"LOW"}
+{"email": "VERY URGENT: I received one cent less than promised", "label":"LOW"}
+{"email": "VERY URGENT: If I don't get what I need in 2 months, this will be a problem", "label":"MEDIUM"}
+{"email": "This works, but needs some improvements until next week", "label":"MEDIUM"}
+{"email": "There is a lot to fix and the presentation is tomorrow", "label":"HIGH"}
+{"email": "Each hour we spend without a solution costs thousands of dollars", "label":"CRITICAL"}
+{"email": "NOT PRIO: We will lose an important contract if this is not solved in the next hour", "label":"CRITICAL"}
+{"email": "I need ice cream now", "label":"LOW"}
+{"email": "Can I get some toilet paper, we're out of", "label":"MEDIUM"}
+{"email": "We need to place reservations for this conference next month", "label":"MEDIUM"}
+{"email": "Let's anticipate this meeting, tomorrow i'm off", "label":"HIGH"}
+{"email": "Suppliers cannot fulfill our needs this week and our stock is very low", "label":"HIGH"}
+{"email": "My plane has an emergency, please call my family", "label":"CRITICAL"}
+{"email": "I have an emergency light lit on my car panel", "label":"HIGH"}
+{"email": "My booking was cancelled for my trip to Australia next year, need to re-do", "label":"LOW"}
+{"email": "The entire database is deleted and the backup is corrupted", "label":"CRITICAL"}
+{"email": "Quick question: what color should the button be for next quarter's release?", "label":"LOW"}
+{"email": "URGENT PLEASE READ: I forgot my coffee mug at the office, is it on my desk?", "label":"LOW"}
+{"email": "The building is literally on fire right now", "label":"CRITICAL"}
+{"email": "If this bug isn't fixed by midnight, the product launch will fail", "label":"CRITICAL"}
+{"email": "No rush at all, just wanted to check if you got my email from last month", "label":"LOW"}
+{"email": "CRITICAL ERROR: A typo was found in the footer of page 45 of the internal guide", "label":"LOW"}
+{"email": "The CEO is waiting in the lobby and nobody has the keys to the conference room", "label":"HIGH"}
+{"email": "Just a heads up, the office coffee machine is making a weird noise", "label":"LOW"}
+{"email": "Our main server just crashed and the website is completely down", "label":"CRITICAL"}
+{"email": "I need you to review this 300-page document by the end of the day", "label":"HIGH"}
+{"email": "Can we schedule a 5-minute sync sometime before the end of the year?", "label":"LOW"}
+{"email": "EMERGENCY I can't find my favorite pen anywhere", "label":"LOW"}
+{"email": "We are getting flooded with 10,000 error messages per second right now", "label":"CRITICAL"}
+{"email": "Whenever you have a spare moment this afternoon, can you approve my PTO?", "label":"LOW"}
+{"email": "PLEASE RESPOND: The client is threatening to sue us if we don't reply in 5 minutes", "label":"HIGH"}
+{"email": "Minor issue: the font size looks slightly off on mobile devices", "label":"LOW"}
+{"email": "All factory assembly lines have ground to a halt due to a system glitch", "label":"CRITICAL"}
+{"email": "I think I left my umbrella in the breakroom, let me know if you see it", "label":"LOW"}
+{"email": "ASAP: I need a status update on a project we haven't started yet", "label":"LOW"}
+{"email": "The accounting software is locked and we cannot process payroll today", "label":"CRITICAL"}
+{"email": "Hey, when you get a chance, can you send me the Wi-Fi password again?", "label":"LOW"}
+{"email": "LIFE OR DEATH: We are completely out of donuts for the Tuesday meeting", "label":"LOW"}
+{"email": "Our payment gateway is rejecting 100% of customer credit cards", "label":"CRITICAL"}
+{"email": "If we don't update this logo by next summer, we will look outdated", "label":"LOW"}
+{"email": "URGENT!!! I accidentally hit 'reply all' to the entire company newsletter", "label":"HIGH"}
+{"email": "The hospital network is offline and doctors cannot access patient files", "label":"CRITICAL"}
+{"email": "Could you please proofread this email draft whenever you find some downtime?", "label":"LOW"}
+{"email": "We have a critical leak in the server room ceiling and water is dripping on the racks", "label":"CRITICAL"}
+{"email": "LOW PRIORITY: The world is ending tomorrow, please advise", "label":"LOW"}
+{"email": "Can someone help me export this spreadsheet to a PDF before Friday?", "label":"LOW"}
+{"email": "The secondary backup battery failed, but the primary system is totally fine", "label":"MEDIUM"}
+{"email": "Our delivery truck just got into an accident and the cargo is blocked", "label":"HIGH"}
+{"email": "FYI: The quarterly report format changed slightly, no action required", "label":"LOW"}

@@ -1,0 +1,51 @@
+Email,Real Classification,Zero Shot Result,Few Shot Result
+I'm going to die if this is not solved in 10 seconds,CRITICAL,CRITICAL,LOW
+"Hi, I need help here, but for next week",LOW,LOW,MEDIUM
+VERY URGENT: I received one cent less than promised,LOW,LOW,MEDIUM
+"VERY URGENT: If I don't get what I need in 2 months, this will be a problem",MEDIUM,MEDIUM,MEDIUM
+"This works, but needs some improvements until next week",MEDIUM,LOW,MEDIUM
+There is a lot to fix and the presentation is tomorrow,HIGH,HIGH,HIGH
+Each hour we spend without a solution costs thousands of dollars,CRITICAL,CRITICAL,CRITICAL
+NOT PRIO: We will lose an important contract if this is not solved in the next hour,CRITICAL,CRITICAL,CRITICAL
+I need ice cream now,LOW,LOW,LOW
+"Can I get some toilet paper, we're out of",MEDIUM,LOW,LOW
+We need to place reservations for this conference next month,MEDIUM,LOW,MEDIUM
+"Let's anticipate this meeting, tomorrow i'm off",HIGH,LOW,MEDIUM
+Suppliers cannot fulfill our needs this week and our stock is very low,HIGH,CRITICAL,HIGH
+"My plane has an emergency, please call my family",CRITICAL,CRITICAL,CRITICAL
+I have an emergency light lit on my car panel,HIGH,CRITICAL,MEDIUM
+"My booking was cancelled for my trip to Australia next year, need to re-do",LOW,**LOW**,MEDIUM
+The entire database is deleted and the backup is corrupted,CRITICAL,CRITICAL,CRITICAL
+Quick question: what color should the button be for next quarter's release?,LOW,LOW,LOW
+"URGENT PLEASE READ: I forgot my coffee mug at the office, is it on my desk?",LOW,LOW,LOW
+The building is literally on fire right now,CRITICAL,CRITICAL,CRITICAL
+"If this bug isn't fixed by midnight, the product launch will fail",CRITICAL,CRITICAL,CRITICAL
+"No rush at all, just wanted to check if you got my email from last month",LOW,LOW,LOW
+CRITICAL ERROR: A typo was found in the footer of page 45 of the internal guide,LOW,LOW,LOW
+The CEO is waiting in the lobby and nobody has the keys to the conference room,HIGH,CRITICAL,CRITICAL
+"Just a heads up, the office coffee machine is making a weird noise",LOW,LOW,LOW
+Our main server just crashed and the website is completely down,CRITICAL,CRITICAL,CRITICAL
+I need you to review this 300-page document by the end of the day,HIGH,**MEDIUM**,HIGH
+Can we schedule a 5-minute sync sometime before the end of the year?,LOW,LOW,LOW
+EMERGENCY I can't find my favorite pen anywhere,LOW,LOW,LOW
+"We are getting flooded with 10,000 error messages per second right now",CRITICAL,CRITICAL,CRITICAL
+"Whenever you have a spare moment this afternoon, can you approve my PTO?",LOW,LOW,LOW
+PLEASE RESPOND: The client is threatening to sue us if we don't reply in 5 minutes,HIGH,CRITICAL,CRITICAL
+Minor issue: the font size looks slightly off on mobile devices,LOW,LOW,LOW
+All factory assembly lines have ground to a halt due to a system glitch,CRITICAL,CRITICAL,CRITICAL
+"I think I left my umbrella in the breakroom, let me know if you see it",LOW,LOW,LOW
+ASAP: I need a status update on a project we haven't started yet,LOW,MEDIUM,MEDIUM
+The accounting software is locked and we cannot process payroll today,CRITICAL,CRITICAL,CRITICAL
+"Hey, when you get a chance, can you send me the Wi-Fi password again?",LOW,LOW,LOW
+LIFE OR DEATH: We are completely out of donuts for the Tuesday meeting,LOW,LOW,LOW
+Our payment gateway is rejecting 100% of customer credit cards,CRITICAL,CRITICAL,CRITICAL
+"If we don't update this logo by next summer, we will look outdated",LOW,LOW,LOW
+URGENT!!! I accidentally hit 'reply all' to the entire company newsletter,HIGH,LOW,MEDIUM
+The hospital network is offline and doctors cannot access patient files,CRITICAL,CRITICAL,CRITICAL
+Could you please proofread this email draft whenever you find some downtime?,LOW,LOW,LOW
+We have a critical leak in the server room ceiling and water is dripping on the racks,CRITICAL,CRITICAL,CRITICAL
+"LOW PRIORITY: The world is ending tomorrow, please advise",LOW,LOW,LOW
+Can someone help me export this spreadsheet to a PDF before Friday?,LOW,LOW,LOW
+"The secondary backup battery failed, but the primary system is totally fine",MEDIUM,LOW,MEDIUM
+Our delivery truck just got into an accident and the cargo is blocked,HIGH,CRITICAL,CRITICAL
+"FYI: The quarterly report format changed slightly, no action required",LOW,LOW,LOW
