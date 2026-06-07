@@ -20,3 +20,7 @@ Day 9 - Eval
 
 Zero Shot accuracy - 72% (36/50)
 Few shots accuracy - 76% (38/50)
+
+Day 10 - JSON
+
+Prefilling is deprecated in Claude 4 models. Basically not needed anymore, Claude understands the instructions to extract JSON only.
