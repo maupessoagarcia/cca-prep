@@ -129,3 +129,27 @@ Five things on this version that are exam-cited and worth memorizing:
 One last thing — your step 5 "call for human intervention" is exactly right and worth keeping in your written version. The exam tests whether you know that the retry loop is _not_ the only failsafe; routing to human review on terminal failure is part of the pattern. Many candidates draw the retry loop and stop there. You didn't. Keep that.
 
 Verdict: your pseudocode would pass on the exam. Add explicit error types and the growing message list, and you've got a whiteboard-ready version you can draw under pressure.
+
+Day 13 - PROMPT CACHING
+
+=== WITHOUT CACHE ===
+Uncached input: 5,352
+Cache reads: 0
+Cache creates: 0
+Elapsed: 14.44s
+
+=== WITH CACHE ===
+Uncached input: 15
+Cache reads: 4,200
+Cache creates: 1,137
+Elapsed: 21.59s
+
+Difference in time explanation ->
+The short version: caching saves you on input processing, but input processing was never what was making your calls slow. Wall-clock latency in an LLM call is dominated by output generation, not input size — so trimming input does almost nothing to elapsed time, and the small overhead caching adds can make it net slower.
+A few things worth unpacking.
+First, notice your numbers reconcile: 4,200 cache reads + 1,137 cache creates + 15 uncached = 5,352, which is exactly the uncached total from the other run. So both runs pushed the same prompt content through the model. The caching didn't reduce how much the model had to "know" — it only changed how those input tokens were billed and processed. That's your first clue that the input difference is a red herring for latency.
+Second, why input size barely matters for time: input tokens are processed in parallel in a single forward pass, which is fast. Output tokens are generated one at a time, sequentially — that's the slow part. A few thousand input tokens is a rounding error in latency terms. If the model happened to generate longer responses in the cached run (and with any nonzero temperature, output length varies call to call), that alone would explain the entire 7-second gap, completely independent of caching.
+Third, caching isn't free on the write side. The first call in your cached run had to create the cache (your 1,137 cache-creation tokens), and writing to the cache carries its own overhead — it's slower and more expensive per token than a normal input token. You pay that penalty up front and only recoup it if the cached prefix is large and reused across many calls. With a prompt this small reused only a handful of times, you may never recoup it.
+Fourth, and probably the biggest factor here: run-to-run variance. With a small workload and few calls, a 14s-vs-22s difference is well within normal noise from server load, queuing, and time-to-first-token jitter. If you reran both several times you'd likely see the gap shrink, vanish, or even flip.
+So caching is doing its job — your uncached input dropped from 5,352 to 15, which is real cost savings on input. It's just that input cost and input latency are different things, and your prompt is too small for the input savings to show up in the clock.
+Where caching actually pays off in latency: very large reused prefixes (think tens of thousands of tokens of context, long documents, big system prompts) hit on many subsequent calls, where re-reading that prefix from cache genuinely beats reprocessing it. To see the effect cleanly, scale the prompt way up, make many more repeated calls so the one-time write cost amortizes, and average elapsed time over several runs rather than trusting a single measurement. If you want, fix the output length (set a low, constant max_tokens or prompt for a one-word answer) so generation time stops masking the input effect you're trying to measure.
