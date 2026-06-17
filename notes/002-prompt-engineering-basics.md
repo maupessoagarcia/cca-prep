@@ -153,3 +153,79 @@ Third, caching isn't free on the write side. The first call in your cached run h
 Fourth, and probably the biggest factor here: run-to-run variance. With a small workload and few calls, a 14s-vs-22s difference is well within normal noise from server load, queuing, and time-to-first-token jitter. If you reran both several times you'd likely see the gap shrink, vanish, or even flip.
 So caching is doing its job — your uncached input dropped from 5,352 to 15, which is real cost savings on input. It's just that input cost and input latency are different things, and your prompt is too small for the input savings to show up in the clock.
 Where caching actually pays off in latency: very large reused prefixes (think tens of thousands of tokens of context, long documents, big system prompts) hit on many subsequent calls, where re-reading that prefix from cache genuinely beats reprocessing it. To see the effect cleanly, scale the prompt way up, make many more repeated calls so the one-time write cost amortizes, and average elapsed time over several runs rather than trusting a single measurement. If you want, fix the output length (set a low, constant max_tokens or prompt for a one-word answer) so generation time stops masking the input effect you're trying to measure.
+
+---
+
+"Why is 'use response_format: json ' wrong on the Messages API, and what is the correct pattern?"
+
+Good question — and the answer hinges on which Claude model you're targeting, because the API changed.
+
+**The wrong pattern (outdated):**
+
+```python
+response = client.messages.create(
+    model="claude-opus-4-6",
+    max_tokens=1024,
+    messages=[...],
+    response_format="json"  # ❌ WRONG — this parameter doesn't exist
+)
+```
+
+The `response_format` parameter you'd see on OpenAI's API doesn't exist on Anthropic's Messages API. That's the first mistake — you're reaching for a sibling API's syntax.
+
+**The correct pattern (modern, Sonnet 4.6+):**
+
+If you want _structured output_ on Claude Sonnet 4.6 or newer, use `client.messages.parse()`:
+
+```python
+from anthropic import Anthropic
+from pydantic import BaseModel
+
+class MyOutput(BaseModel):
+    name: str
+    age: int
+    items: list[str]
+
+client = Anthropic()
+response = client.messages.parse(
+    model="claude-sonnet-4-6",
+    max_tokens=1024,
+    messages=[
+        {"role": "user", "content": "Extract: John is 30 and likes apples, oranges, and carrots."}
+    ],
+    response_schema=MyOutput
+)
+
+result = response.parsed_output
+print(result.name)   # "John"
+print(result.age)    # 30
+print(result.items)  # ["apples", "oranges", "carrots"]
+```
+
+The key differences:
+
+1. **Use `client.messages.parse()`** instead of `client.messages.create()`.
+2. **Pass a Pydantic model as `response_schema`** — that's your contract for what shape you expect back.
+3. **Access the structured result via `response.parsed_output`** — it's already deserialized into your Python class, not a raw JSON string.
+
+**If you're stuck on an older model** (Claude 3 Sonnet, Opus 3, etc.) that doesn't support `parse()`:
+
+You can't use structured outputs natively. Your workaround is to prompt for JSON in the system message and parse the raw text response yourself:
+
+```python
+response = client.messages.create(
+    model="claude-3-5-sonnet-20241022",  # older model
+    max_tokens=1024,
+    system="Respond only with valid JSON, no markdown, no preamble.",
+    messages=[
+        {"role": "user", "content": "Extract: John is 30..."}
+    ]
+)
+
+import json
+result = json.loads(response.content[0].text)
+```
+
+**Why the change?** Anthropic moved from "prompt the model to spit JSON and parse it yourself" to native structured outputs with `parse()`, which is faster, cheaper (tokens-wise), and more reliable because the model's output is validated against your schema server-side before you even get it.
+
+So: **If you're on Sonnet 4.6+, use `parse()`. If you're on an older model or need the old API, prompt for JSON and parse it yourself.** And never look for `response_format` on the Anthropic API — that's OpenAI syntax.
